@@ -53,11 +53,7 @@ Estas vistas permiten una mejor experiencia de usuario en casos de errores.
 
 ---
 
-## 🧭 Redirección Condicional por Rol
 
-Las páginas incluyen navegación dinámica basada en el rol del usuario autenticado:
-
-<pre> ```html <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/admin}">Inicio Admin</a> <a th:if="${#authorization.expression('hasRole(''USER'')')}" th:href="@{/user}">Inicio Usuario</a> <a th:if="${#authorization.expression('hasRole(''MODERADOR'')')}" th:href="@{/moderador}">Inicio Moderador</a> ``` </pre>
 
 ## 📸 Capturas de Pantalla
 
