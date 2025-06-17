@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error 403 - Acceso Denegado</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            text-align: center;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #e74c3c;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+
+        a.button {
+            display: inline-block;
+            margin: 5px;
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        a.button:hover {
+            background-color: #2c80b4;
+        }
+    </style>
+</head>
+<body>
+    <h1>403 - Acceso Denegado</h1>
+    <p>No tienes permiso para acceder a esta página.</p>
+
+    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/admin}" class="button">Volver al panel Admin</a>
+    <a th:if="${#authorization.expression('hasRole(''USER'')')}" th:href="@{/user}" class="button">Volver al panel Usuario</a>
+    <a th:if="${#authorization.expression('hasRole(''MODERADOR'')')}" th:href="@{/moderador}" class="button">Volver al panel Moderador</a>
+</body>
+</html>

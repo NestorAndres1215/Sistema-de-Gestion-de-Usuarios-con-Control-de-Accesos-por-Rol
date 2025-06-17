@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error 500 - Error del Servidor</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        a.button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>500 - Error del Servidor</h1>
+    <p>Lo sentimos, ocurrió un error inesperado en el servidor.</p>
+
+    <!-- Botón dinámico según el rol -->
+    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/admin}" class="button">Volver al inicio</a>
+    <a th:if="${#authorization.expression('hasRole(''USER'')')}" th:href="@{/user}" class="button">Volver al inicio</a>
+    <a th:if="${#authorization.expression('hasRole(''MODERADOR'')')}" th:href="@{/moderador}" class="button">Volver al inicio</a>
+</body>
+</html>
