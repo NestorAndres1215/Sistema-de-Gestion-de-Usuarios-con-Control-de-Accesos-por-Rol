@@ -8,6 +8,6 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String mostrarVistaAdmin() {
-        return "admin/admin"; // <-- Esto busca templates/admin/admin.html
+        return "admin/admin"; // Carga admin.html desde templates/admin/
     }
 }

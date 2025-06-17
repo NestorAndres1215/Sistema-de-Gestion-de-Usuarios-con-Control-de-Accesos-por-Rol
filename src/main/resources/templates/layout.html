@@ -1,45 +1,317 @@
 <!DOCTYPE html>
-<html lang="es"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
-    <title layout:title-pattern="$LAYOUT_TITLE - RoleApp">RoleApp</title>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <title>Layout Columnas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 
     <style>
-        .navbar-custom {
-            background-color: #0d1b2a; /* azul oscuro elegante */
-        }
-
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link {
-            color: #f8f9fa; /* blanco */
-        }
-
-        .navbar-custom .nav-link:hover {
-            color: #4da8da; /* azul claro al pasar el mouse */
-        }
-
-        .navbar-toggler {
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         
+
+        body {
+            display: flex;
+            flex-direction: row;
+            min-height: 100vh;
+        }
+        .col-3 {
+            width: 25%;
+            min-width: 220px;
+            background: linear-gradient(180deg, #154eb1 0%, var(--light-blue) 100%);
+            color: var(--white);
+            padding: 20px;
+            height: 100vh;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+            transition: width 0.3s ease;
+            position: relative;
+        }
+        .col-9 {
+            flex: 1;
+            background-color: var(--white);
+            padding: 32px 64px 32px 320px; /* Aumenta el padding izquierdo y derecho */
+            min-height: 100vh;
+            overflow-x: auto;
+        }
+        .col-3 ul {
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        .col-3 a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 0 25px 25px 0;
+        }
+
+        .col-3 a i {
+            margin-right: 12px;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .col-3 a:hover {
+         
+            transform: translateX(5px);
+        }
+
+        .col-3 a:hover i {
+            transform: scale(1.1);
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .col-3 {
+                width: 100%;
+                min-width: unset;
+                position: relative;
+                height: auto;
+                box-shadow: none;
+            }
+
+            .col-9 {
+                width: 100%;
+                margin-left: 0;
+                border-radius: 10px;
+                padding: 20px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .col-9 {
+                padding: 15px;
+            }
+
+            .col-3 a {
+                padding: 10px 15px;
+            }
+        }
+        :root {
+            --primary-blue: #91b1e4;
+            --light-blue: #285888;
+            --white: #FFFFFF;
+            --text-dark: #1B263B;
+            --text-light: #64748B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .admin-sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, #154eb1 0%, #1B263B 100%);
+            padding: 20px 0;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            height: 100vh;
+            transition: width 0.3s ease;
+        }
+
+        .admin-sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-user-info {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .admin-nav-list {
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        .admin-nav-item {
+            margin-bottom: 8px;
+        }
+
+        .admin-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 0 25px 25px 0;
+        }
+
+        .admin-nav-link i {
+            margin-right: 12px;
+            font-size: 22px;
+            color: var(--white);
+            transition: all 0.3s ease;
+            min-width: 22px;
+        }
+
+        .admin-nav-link:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .admin-nav-link:hover i {
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .admin-main {
+            margin-left: 250px;
+            padding: 20px;
+            background-color: var(--white);
+            flex-grow: 1;
+            transition: margin-left 0.3s ease;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background: var(--white);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .admin-header h1 {
+            font-size: 24px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #2563EB;
+        }
+
+        .admin-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .admin-card {
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .admin-card h3 {
+            font-size: 18px;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .admin-card p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .admin-sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                box-shadow: none;
+            }
+
+            .admin-main {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .admin-header {
+                padding: 15px;
+            }
+
+            .admin-card {
+                padding: 15px;
+            }
+        }
+         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 15px;
+        }
+
+        h2 {
+            font-weight: 600;
+          
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: 1.75rem;
+        }
+
+  
     </style>
-<body>
-
-<!-- Barra de navegación -->
-<div th:replace="fragments/navbar :: navbar"></div>
-
-<!-- Contenido principal -->
-<main layout:fragment="content" style="padding: 2rem;"></main>
-<!-- Bootstrap 5 JS (para que funcione el botón hamburguesa en móvil) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
-
+    </head>
+    
+    <body>
+    
+    
+        <!-- Columna izquierda (sidebar admin) -->
+        <div class="col-3" sec:authorize="hasRole('ROLE_ADMIN')" th:replace="~{fragments/admin-panel :: adminPanel}">
+            <!-- Sidebar se carga dinámicamente -->
+        </div>
+    
+        <!-- Columna derecha (contenido principal) -->
+        <div class="col-9">
+            <main layout:fragment="content">
+                <!-- Aquí va el contenido dinámico -->
+            </main>
+        </div>
+    
+    </body>
+    
+    </html>

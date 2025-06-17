@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
-
 import com.example.entity.Usuario;
 import com.example.service.UsuarioService;
 
@@ -20,27 +18,36 @@ public class AuthController {
 
     // ======= LOGIN =======
     @GetMapping("/login")
-    public String mostrarLogin(@RequestParam(value = "error", required = false) String error,
-            @RequestParam(value = "logout", required = false) String logout,
-            @RequestParam(value = "registroExitoso", required = false) String registroExitoso,
-            Model model) {
-        if (error != null) {
-            model.addAttribute("error", "Credenciales incorrectas");
+    public String mostrarLogin(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Redirigir según el rol
+            if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                return "redirect:/admin";
+            } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
+                return "redirect:/user";
+            } else if (authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_MODERADOR"))) {
+                return "redirect:/moderador";
+            }
         }
-        if (logout != null) {
-            model.addAttribute("logout", "Has cerrado sesión correctamente");
-        }
-        if (registroExitoso != null) {
-            model.addAttribute("registroExitoso", true);
-        }
-        return "auth/login";
+        return "auth/login"; // Si no está autenticado, muestra el login
     }
 
     // ======= REGISTRO =======
     @GetMapping("/registro")
-    public String mostrarFormularioRegistro(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        return "auth/registro";
+    public String mostrarRegistro(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Redirigir según el rol
+            if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                return "redirect:/admin";
+            } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"))) {
+                return "redirect:/user";
+            } else if (authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_MODERADOR"))) {
+                return "redirect:/moderador";
+            }
+        }
+        return "auth/registro"; 
     }
 
     @PostMapping("/registro")
@@ -71,11 +78,14 @@ public class AuthController {
     }
 
     // ======= LISTADO DE USUARIOS (solo ADMIN) =======
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuarios")
     public String listarUsuarios(Model model) {
         model.addAttribute("usuarios", usuarioService.findAll());
         return "admin/usuarios";
     }
+
+
+  
 
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div th:fragment="adminPanel">
+        <div class="admin-container">
+            <div class="admin-sidebar">
+                <div class="admin-sidebar-header">
+                    <i class="fa-solid fa-circle-user fa-3x mb-2" style="color: var(--white);"></i>
+                    <div class="admin-user-info">[[${#authentication.name}]]</div>
+                </div>
+                <ul class="admin-nav-list">
+                    <li class="admin-nav-item">
+                        <a class="admin-nav-link" th:href="@{/admin/dashboard}">
+                            <i class="fa-solid fa-gauge"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="admin-nav-item">
+                        <a class="admin-nav-link" th:href="@{/usuarios}">
+                            <i class="fa-solid fa-user"></i> Gestión de Usuarios
+                        </a>
+                    </li>
+                    <li class="admin-nav-item">
+                        <a class="admin-nav-link" th:href="@{/admin/estadisticas}">
+                            <i class="fa-solid fa-chart-line"></i> Estadísticas
+                        </a>
+                    </li>
+                    <li class="admin-nav-item">
+                        <a class="admin-nav-link" th:href="@{/admin/configuraciones}">
+                            <i class="fa-solid fa-gear"></i> Configuraciones
+                        </a>
+                    </li>
+                     <li class="admin-nav-item">
+                        <a class="admin-nav-link" th:href="@{/logout}">
+                          <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
+     
+        </div>
+    </div>
+</body>
+</html>
